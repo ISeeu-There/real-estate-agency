@@ -1,13 +1,15 @@
 <template>
   <div
-    class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12 px-4"
+    class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4 sm:px-6 lg:px-8"
   >
     <!-- Header / Navbar -->
     <header
-      class="bg-white border-b border-gray-200 px-6 py-4 shadow-sm rounded-xl max-w-7xl mx-auto flex justify-between items-center"
+      class="bg-white border-b border-gray-200 px-4 py-4 sm:px-6 shadow-sm rounded-xl max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0"
     >
       <h1 class="text-2xl font-semibold text-blue-600">DreamHomes</h1>
-      <nav class="flex gap-6 text-gray-700 font-medium">
+      <nav
+        class="flex flex-wrap gap-4 sm:gap-6 text-gray-700 font-medium justify-center sm:justify-end"
+      >
         <button
           @click="scrollToSection('home')"
           class="hover:text-blue-600 transition"
@@ -35,61 +37,71 @@
       </nav>
     </header>
 
-    <div class="relative max-w-7xl mx-auto space-y-12 mt-8">
+    <div class="relative max-w-7xl mx-auto space-y-12 mt-6">
       <!-- Hero Section -->
-      <section id="home" class="text-center space-y-4">
+      <section id="home" class="text-center space-y-4 px-2 sm:px-0">
         <div
-          class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-2xl mb-4"
+          class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-2xl mb-4 mx-auto"
         >
           <BuildingOfficeIcon class="h-8 w-8 text-blue-600" />
         </div>
-        <h1 class="text-5xl font-bold text-gray-900 tracking-tight">
+        <h1 class="text-3xl sm:text-5xl font-bold text-gray-900 tracking-tight">
           Find Your Dream Home
         </h1>
-        <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+        <p class="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
           Browse the latest properties and discover your perfect place to live.
         </p>
       </section>
 
       <!-- About Section -->
-      <section id="about" class="text-center py-16 space-y-4">
-        <h2 class="text-3xl font-bold text-gray-900">About Us</h2>
-        <p class="text-gray-600 max-w-3xl mx-auto">
+      <section
+        id="about"
+        class="text-center py-12 sm:py-16 space-y-4 px-2 sm:px-0"
+      >
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">About Us</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto text-sm sm:text-base">
           DreamHomes helps you find the perfect home with the latest listings
           and personalized service.
         </p>
       </section>
 
       <!-- Services Section -->
-      <section id="services" class="text-center py-16 space-y-4">
-        <h2 class="text-3xl font-bold text-gray-900">Nos Services</h2>
-        <p class="text-gray-600 max-w-3xl mx-auto">
+      <section
+        id="services"
+        class="text-center py-12 sm:py-16 space-y-4 px-2 sm:px-0"
+      >
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">
+          Nos Services
+        </h2>
+        <p class="text-gray-600 max-w-3xl mx-auto text-sm sm:text-base">
           We provide property buying, selling, and rental services with
           top-notch support for all clients.
         </p>
       </section>
 
       <!-- Properties Grid -->
-      <section class="space-y-12">
-        <div class="text-center space-y-4">
-          <h2 class="text-4xl font-bold text-gray-900">Available Properties</h2>
-          <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+      <section class="space-y-8 sm:space-y-12 px-2 sm:px-0">
+        <div class="text-center space-y-2">
+          <h2 class="text-2xl sm:text-4xl font-bold text-gray-900">
+            Available Properties
+          </h2>
+          <p class="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">
             Browse the latest properties posted by our admins and find your
             perfect match.
           </p>
         </div>
 
         <!-- Search Bar -->
-        <div class="max-w-2xl mx-auto">
+        <div class="max-w-md mx-auto">
           <div class="relative group">
             <MagnifyingGlassIcon
-              class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400"
+              class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400"
             />
             <input
               v-model="searchQuery"
               type="text"
               placeholder="Search by title, location, or type..."
-              class="w-full pl-12 pr-6 py-4 text-lg rounded-2xl shadow-lg border-0 bg-white focus:ring-4 focus:ring-blue-500/20 focus:shadow-xl outline-none transition-all duration-300 placeholder:text-gray-400"
+              class="w-full pl-10 pr-4 py-3 text-sm sm:text-base rounded-xl shadow-lg border-0 bg-white focus:ring-4 focus:ring-blue-500/20 focus:shadow-md outline-none transition-all duration-300 placeholder:text-gray-400"
             />
           </div>
         </div>
@@ -97,35 +109,35 @@
         <!-- Properties Grid -->
         <div
           v-if="filteredProperties.length"
-          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+          class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8"
         >
           <div
             v-for="property in filteredProperties"
             :key="property.id"
-            class="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-blue-200 hover:-translate-y-2"
+            class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-blue-200 hover:-translate-y-1"
           >
             <div class="relative overflow-hidden">
               <img
                 :src="property.image"
                 :alt="property.title"
-                class="h-64 w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                class="h-48 sm:h-64 w-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
               <span
                 :class="getStatusBadgeClass(property.status)"
-                class="absolute top-4 left-4 px-4 py-2 text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm"
+                class="absolute top-3 left-3 px-3 py-1 text-xs sm:text-sm font-semibold rounded-full shadow-md backdrop-blur-sm"
               >
                 {{ property.status }}
               </span>
             </div>
-            <div class="p-6 space-y-4">
+            <div class="p-4 sm:p-6 space-y-2 sm:space-y-4">
               <h3
-                class="font-bold text-xl text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors"
+                class="font-bold text-lg sm:text-xl text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors"
               >
                 {{ property.title }}
               </h3>
-              <div class="flex items-center text-gray-500 text-sm">
+              <div class="flex items-center text-gray-500 text-xs sm:text-sm">
                 <svg
-                  class="w-4 h-4 mr-2"
+                  class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -138,12 +150,12 @@
                 {{ property.location }}
               </div>
               <div class="flex items-center justify-between">
-                <p class="text-blue-600 font-bold text-2xl">
+                <p class="text-blue-600 font-bold text-lg sm:text-2xl">
                   ${{ formatPrice(property.price) }}
                 </p>
                 <button
                   @click="viewProperty(property)"
-                  class="px-6 py-2 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+                  class="px-4 sm:px-6 py-2 bg-blue-600 text-white text-xs sm:text-sm font-semibold rounded-xl hover:bg-blue-700 hover:shadow-md transform hover:scale-105 transition-all duration-200"
                 >
                   View Details
                 </button>
@@ -151,28 +163,41 @@
             </div>
           </div>
         </div>
+
+        <!-- No properties -->
+        <div
+          v-else
+          class="text-center py-12 text-gray-500 text-sm sm:text-base"
+        >
+          No properties found.
+        </div>
       </section>
 
       <!-- Contact Section -->
-      <section id="contact" class="text-center py-16 space-y-4">
-        <h2 class="text-3xl font-bold text-gray-900">Contact Us</h2>
-        <p class="text-gray-600 max-w-3xl mx-auto">
+      <section
+        id="contact"
+        class="text-center py-12 sm:py-16 space-y-2 sm:space-y-4 px-2 sm:px-0"
+      >
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Contact Us</h2>
+        <p class="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
           Reach out via email at contact@dreamhomes.com or call us at +123 456
           7890.
         </p>
       </section>
     </div>
 
-    <!-- Property Modal (same as before) -->
+    <!-- Property Modal -->
     <div
       v-if="showModal && selectedProperty"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4"
     >
       <div
-        class="bg-white rounded-2xl shadow-xl max-w-2xl w-full mx-4 overflow-hidden transform transition-all"
+        class="bg-white rounded-2xl shadow-xl w-full max-w-md sm:max-w-2xl mx-auto overflow-auto max-h-[90vh] transform transition-all"
       >
-        <div class="flex justify-between items-center px-6 py-4 border-b">
-          <h2 class="text-xl font-semibold text-gray-800">
+        <div
+          class="flex justify-between items-center px-4 sm:px-6 py-3 border-b"
+        >
+          <h2 class="text-lg sm:text-xl font-semibold text-gray-800">
             {{ selectedProperty.title }}
           </h2>
           <button
@@ -185,17 +210,23 @@
         <img
           :src="selectedProperty.image"
           :alt="selectedProperty.title"
-          class="w-full h-64 object-cover"
+          class="w-full h-48 sm:h-64 object-cover"
         />
-        <div class="p-6 space-y-4">
-          <p class="text-gray-600">{{ selectedProperty.description }}</p>
-          <div class="flex justify-between text-gray-700">
+        <div class="p-4 sm:p-6 space-y-2 sm:space-y-4">
+          <p class="text-gray-600 text-sm sm:text-base">
+            {{ selectedProperty.description }}
+          </p>
+          <div
+            class="flex flex-col sm:flex-row justify-between text-gray-700 text-xs sm:text-sm gap-2 sm:gap-0"
+          >
             <div>
               <strong>Location:</strong> {{ selectedProperty.location }}
             </div>
             <div><strong>Status:</strong> {{ selectedProperty.status }}</div>
           </div>
-          <div class="flex justify-between text-gray-700">
+          <div
+            class="flex flex-col sm:flex-row justify-between text-gray-700 text-xs sm:text-sm gap-2 sm:gap-0"
+          >
             <div>
               <strong>Bedrooms:</strong> {{ selectedProperty.bedrooms }}
             </div>
@@ -203,14 +234,14 @@
               <strong>Bathrooms:</strong> {{ selectedProperty.bathrooms }}
             </div>
           </div>
-          <div class="text-2xl font-bold text-blue-600">
-            ${{ formatPrice(selectedProperty.price) }}
+          <div class="text-lg sm:text-2xl font-bold text-blue-600">
+            $ {{ formatPrice(selectedProperty.price) }}
           </div>
         </div>
-        <div class="px-6 py-4 border-t flex justify-end">
+        <div class="px-4 sm:px-6 py-3 border-t flex justify-end">
           <button
             @click="closeModal"
-            class="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
+            class="px-4 sm:px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
           >
             Close
           </button>
