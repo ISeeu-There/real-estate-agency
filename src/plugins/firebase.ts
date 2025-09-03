@@ -4,13 +4,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAhqNaMp07A_3Gz_b_vPEcZJESDSWF3l-I", // Make sure this is correct
-  authDomain: "real-estate-agency-829b3.firebaseapp.com",
-  projectId: "real-estate-agency-829b3",
-  storageBucket: "real-estate-agency-829b3.appspot.com", // <-- corrected
-  messagingSenderId: "263347565847",
-  appId: "1:263347565847:web:e7d949a681b2d7b1373352",
-  measurementId: "G-T12RSGSLR6",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
