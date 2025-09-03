@@ -503,9 +503,19 @@ import {
   XMarkIcon,
   BuildingOfficeIcon,
 } from "@heroicons/vue/24/outline";
+import { db } from "@/plugins/firebase";
+import {
+  collection,
+  onSnapshot,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 interface Property {
-  id: number;
+  id: string;
   title: string;
   type: string;
   price: number;
@@ -541,68 +551,39 @@ const formData = ref({
   description: "",
 });
 
-// Mock data
-const properties = ref<Property[]>([
-  {
-    id: 1,
-    title: "Modern Family House",
-    type: "house",
-    price: 750000,
-    location: "San Francisco, CA",
-    status: "active",
-    bedrooms: 4,
-    bathrooms: 3,
-    image:
-      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&h=300&fit=crop",
-    description:
-      "Beautiful modern house with spacious rooms and great location.",
-    createdAt: "2024-01-15",
-  },
-  {
-    id: 2,
-    title: "Downtown Apartment",
-    type: "apartment",
-    price: 450000,
-    location: "New York, NY",
-    status: "pending",
-    bedrooms: 2,
-    bathrooms: 2,
-    image:
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop",
-    description: "Luxury apartment in the heart of downtown.",
-    createdAt: "2024-01-20",
-  },
-  {
-    id: 3,
-    title: "Cozy Condo",
-    type: "condo",
-    price: 320000,
-    location: "Austin, TX",
-    status: "sold",
-    bedrooms: 2,
-    bathrooms: 1.5,
-    image:
-      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=400&h=300&fit=crop",
-    description: "Perfect starter home with modern amenities.",
-    createdAt: "2024-02-01",
-  },
-  {
-    id: 4,
-    title: "Vacant Land Plot",
-    type: "land",
-    price: 150000,
-    location: "Denver, CO",
-    status: "active",
-    bedrooms: 0,
-    bathrooms: 0,
-    image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&h=300&fit=crop",
-    description: "Prime location for building your dream home.",
-    createdAt: "2024-02-10",
-  },
-]);
+// Real-time properties
+const properties = ref<Property[]>([]);
 
-// Computed
+const setupRealtimeProperties = () => {
+  const propertiesCollection = collection(db, "properties");
+
+  onSnapshot(propertiesCollection, (snapshot) => {
+    properties.value = snapshot.docs.map((doc) => {
+      const data = doc.data() as Omit<Property, "id">;
+      return {
+        id: doc.id,
+        title: data.title || "",
+        type: data.type || "",
+        price: data.price || 0,
+        location: data.location || "",
+        status: data.status || "inactive",
+        bedrooms: data.bedrooms || 0,
+        bathrooms: data.bathrooms || 0,
+        image: data.image || "",
+        description: data.description || "",
+        createdAt: (data.createdAt as any)?.toDate
+          ? (data.createdAt as any).toDate().toISOString()
+          : new Date().toISOString(),
+      };
+    });
+  });
+};
+
+onMounted(() => {
+  setupRealtimeProperties();
+});
+
+// Computed properties
 const filteredProperties = computed(() => {
   return properties.value.filter((property) => {
     const matchesSearch =
@@ -631,24 +612,19 @@ const visiblePages = computed(() => {
   const start = Math.max(1, currentPage.value - 2);
   const end = Math.min(totalPages.value, start + 4);
 
-  for (let i = start; i <= end; i++) {
-    pages.push(i);
-  }
+  for (let i = start; i <= end; i++) pages.push(i);
   return pages;
 });
 
-// Methods
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat().format(price);
-};
+// Helpers
+const formatPrice = (price: number) => new Intl.NumberFormat().format(price);
 
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
+const formatDate = (dateString: string) =>
+  new Date(dateString).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
-};
 
 const getStatusBadgeClass = (status: string) => {
   const classes = {
@@ -660,6 +636,7 @@ const getStatusBadgeClass = (status: string) => {
   return classes[status as keyof typeof classes] || "bg-gray-100 text-gray-800";
 };
 
+// Modal functions
 const openCreateModal = () => {
   modalMode.value = "create";
   formData.value = {
@@ -689,57 +666,49 @@ const editProperty = (property: Property) => {
   showModal.value = true;
 };
 
-const deleteProperty = (id: number) => {
-  if (confirm("Are you sure you want to delete this property?")) {
-    properties.value = properties.value.filter((p) => p.id !== id);
-  }
-};
-
 const closeModal = () => {
   showModal.value = false;
   selectedProperty.value = null;
 };
 
-const saveProperty = () => {
-  if (modalMode.value === "create") {
-    const newProperty: Property = {
-      ...formData.value,
-      id: Date.now(),
-      createdAt: new Date().toISOString().split("T")[0],
-    };
-    properties.value.unshift(newProperty);
-  } else if (modalMode.value === "edit" && selectedProperty.value) {
-    const index = properties.value.findIndex(
-      (p) => p.id === selectedProperty.value!.id
-    );
-    if (index !== -1) {
-      properties.value[index] = {
+// CRUD operations
+const saveProperty = async () => {
+  try {
+    if (modalMode.value === "create") {
+      await addDoc(collection(db, "properties"), {
         ...formData.value,
-        id: selectedProperty.value.id,
-        createdAt: selectedProperty.value.createdAt,
-      };
+        createdAt: serverTimestamp(),
+      });
+    } else if (modalMode.value === "edit" && selectedProperty.value) {
+      const docRef = doc(db, "properties", selectedProperty.value.id);
+      await updateDoc(docRef, formData.value);
     }
+    closeModal();
+  } catch (err) {
+    console.error("Error saving property:", err);
   }
-  closeModal();
 };
 
-const previousPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--;
+const deleteProperty = async (id: string) => {
+  if (confirm("Are you sure you want to delete this property?")) {
+    try {
+      await deleteDoc(doc(db, "properties", id));
+    } catch (err) {
+      console.error("Error deleting property:", err);
+    }
   }
+};
+
+// Pagination
+const previousPage = () => {
+  if (currentPage.value > 1) currentPage.value--;
 };
 
 const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++;
-  }
+  if (currentPage.value < totalPages.value) currentPage.value++;
 };
 
 const goToPage = (page: number) => {
   currentPage.value = page;
 };
-
-onMounted(() => {
-  // Component mounted
-});
 </script>

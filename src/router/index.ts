@@ -1,11 +1,14 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import LoginView from "@/views/LoginView.vue";
 import { useUserStore } from "@/stores/user";
-import RegisterView from "@/views/RegisterView.vue";
 
 const routes: RouteRecordRaw[] = [
-  { path: "/", name: "Login", component: LoginView },
-  { path: "/register", name: "Register", component: RegisterView },
+  { path: "/login", name: "Login", component: LoginView },
+  {
+    path: "/",
+    name: "MainPage",
+    component: () => import("@/views/user/MainPage.vue"),
+  },
   {
     path: "/admin",
     name: "AdminDashboard",
@@ -13,32 +16,18 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true, requiresAdmin: true },
     children: [
       {
-        path: "",
-        name: "DashboardHome",
-        component: () => import("@/views/admin/DashboardHome.vue"),
-      },
-      {
         path: "properties",
         name: "AdminProperties",
         component: () => import("@/views/admin/Properties.vue"),
+        meta: { requiresAuth: true, requiresAdmin: true },
       },
       {
         path: "appointments",
         name: "AdminAppointments",
         component: () => import("@/views/admin/Appointments.vue"),
-      },
-      {
-        path: "users",
-        name: "AdminUsers",
-        component: () => import("@/views/admin/Users.vue"),
+        meta: { requiresAuth: true, requiresAdmin: true },
       },
     ],
-  },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: () => import("@/views/user/UserDashboard.vue"),
-    meta: { requiresAuth: true },
   },
 ];
 
@@ -47,19 +36,23 @@ const router = createRouter({
   routes,
 });
 
+// Navigation Guard
 router.beforeEach((to) => {
   const store = useUserStore();
   const user = store.user;
 
-  // Require login
+  // If route requires login and user is not logged in → redirect to login
   if (to.meta.requiresAuth && !user) {
     return { name: "Login" };
   }
 
-  // Require admin
+  // If route requires admin and user is not admin → redirect to main page
   if (to.meta.requiresAdmin && user?.role !== "admin") {
-    return { name: "Dashboard" };
+    return { name: "MainPage" };
   }
+
+  // Otherwise allow navigation
+  return true;
 });
 
 export default router;

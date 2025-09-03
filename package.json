@@ -12,6 +12,7 @@
     "@heroicons/vue": "^2.2.0",
     "@mdi/font": "^7.4.47",
     "firebase": "^12.2.1",
+    "firebase-tools": "^14.15.1",
     "lucide-vue-next": "^0.542.0",
     "pinia": "^3.0.3",
     "vue": "^3.5.18",

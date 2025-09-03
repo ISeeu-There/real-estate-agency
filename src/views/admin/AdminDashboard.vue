@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen bg-gray-50">
+  <div class="flex h-screen bg-gray-50 text-gray-800">
     <!-- Loading Overlay -->
     <div
       v-if="loading"
@@ -18,22 +18,22 @@
       <!-- Sidebar -->
       <aside
         :class="[
-          'bg-white shadow-lg transition-all duration-300 ease-in-out border-r border-gray-200 flex flex-col relative z-40',
-          isSidebarOpen ? 'w-64' : 'w-16',
+          'bg-white shadow-md border-r border-gray-200 flex flex-col z-40 transition-all duration-300 ease-in-out',
+          isSidebarOpen ? 'w-64' : 'w-20',
         ]"
       >
         <!-- Logo & Toggle -->
         <header
-          class="flex items-center justify-between p-4 border-b border-gray-200 min-h-[65px]"
+          class="flex items-center justify-between p-4 border-b border-gray-200"
         >
           <Transition name="fade">
-            <h1 v-if="isSidebarOpen" class="font-bold text-xl text-gray-800">
+            <h1 v-if="isSidebarOpen" class="font-bold text-lg tracking-wide">
               Admin Panel
             </h1>
           </Transition>
           <button
             @click="toggleSidebar"
-            class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            class="p-2 rounded-lg hover:bg-gray-100 transition"
             :title="isSidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'"
           >
             <XMarkIcon v-if="isSidebarOpen" class="h-5 w-5" />
@@ -41,25 +41,24 @@
           </button>
         </header>
 
-        <!-- Navigation Links -->
-        <nav class="flex-1 mt-2 px-2">
-          <ul class="space-y-1">
+        <!-- Navigation -->
+        <nav class="flex-1 mt-2 px-2 space-y-1">
+          <ul>
             <li v-for="item in menuItems" :key="item.name">
               <router-link
                 :to="item.route"
-                class="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors group"
+                class="flex items-center p-3 rounded-lg group transition"
                 :class="{
-                  'bg-blue-50 text-blue-700 border-r-2 border-blue-500':
+                  'bg-blue-100 text-blue-700 font-semibold shadow-sm':
                     isActiveRoute(item.route),
+                  'hover:bg-gray-100 text-gray-700': !isActiveRoute(item.route),
                   'justify-center': !isSidebarOpen,
                 }"
                 :title="!isSidebarOpen ? item.name : ''"
               >
                 <component :is="item.icon" class="h-5 w-5 flex-shrink-0" />
                 <Transition name="slide-fade">
-                  <span v-if="isSidebarOpen" class="ml-3 font-medium">{{
-                    item.name
-                  }}</span>
+                  <span v-if="isSidebarOpen" class="ml-3">{{ item.name }}</span>
                 </Transition>
               </router-link>
             </li>
@@ -70,14 +69,14 @@
         <footer class="p-4 border-t border-gray-200">
           <div
             v-if="isSidebarOpen && store.user"
-            class="mb-3 p-2 bg-gray-50 rounded-lg"
+            class="mb-3 p-3 bg-gray-50 rounded-lg"
           >
-            <p class="text-sm text-gray-600 truncate">{{ store.user.email }}</p>
+            <p class="text-sm font-medium truncate">{{ store.user.email }}</p>
             <p class="text-xs text-gray-500">Administrator</p>
           </div>
           <button
             @click="handleLogout"
-            class="flex items-center w-full p-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors group"
+            class="flex items-center w-full p-3 rounded-lg group transition text-red-600 hover:bg-red-50"
             :class="{ 'justify-center': !isSidebarOpen }"
             :title="!isSidebarOpen ? 'Logout' : ''"
           >
@@ -92,45 +91,41 @@
       <!-- Main Content -->
       <main class="flex-1 flex flex-col overflow-hidden">
         <!-- Top Bar -->
-        <header class="bg-white border-b border-gray-200 px-6 py-4">
+        <header class="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
           <div class="flex items-center justify-between">
             <div>
-              <h1 class="text-2xl font-bold text-gray-900">
+              <h1 class="text-2xl font-semibold">
                 {{ getCurrentPageTitle() }}
               </h1>
-              <p class="text-gray-600 text-sm mt-1">
+              <p class="text-gray-500 text-sm mt-1">
                 Welcome back, {{ store.user?.email?.split("@")[0] || "Admin" }}
               </p>
             </div>
-            <div class="text-right">
-              <p class="text-sm text-gray-500">{{ currentDateTime }}</p>
-            </div>
+            <p class="text-sm text-gray-500">{{ currentDateTime }}</p>
           </div>
         </header>
 
         <!-- Page Content -->
         <div class="flex-1 p-6 overflow-auto">
-          <router-view v-if="route.path !== '/admin'" />
+          <!-- Show child routes -->
+          <router-view />
 
-          <!-- Dashboard Overview -->
+          <!-- Dashboard overview -->
           <div v-if="route.path === '/admin'">
+            <!-- Stat Cards -->
             <div
-              class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8"
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
             >
               <div
                 v-for="card in dashboardCards"
                 :key="card.title"
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
+                class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition hover:-translate-y-1"
               >
                 <div class="flex items-center justify-between">
                   <div>
-                    <p class="text-gray-600 text-sm font-medium">
-                      {{ card.title }}
-                    </p>
-                    <p class="text-2xl font-bold text-gray-900 mt-2">
-                      {{ card.value }}
-                    </p>
-                    <p class="text-xs text-gray-500 mt-1">
+                    <p class="text-gray-500 text-sm">{{ card.title }}</p>
+                    <p class="text-2xl font-bold mt-2">{{ card.value }}</p>
+                    <p class="text-xs text-gray-400 mt-1">
                       {{ card.subtitle }}
                     </p>
                   </div>
@@ -143,6 +138,69 @@
                 </div>
               </div>
             </div>
+
+            <!-- Recent Properties & Appointments -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <!-- Recent Properties -->
+              <div
+                class="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
+              >
+                <h2 class="text-lg font-semibold mb-4">Recent Properties</h2>
+                <div class="space-y-3">
+                  <div
+                    v-for="i in 3"
+                    :key="i"
+                    class="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div>
+                      <p class="font-medium">Property {{ i }}</p>
+                      <p class="text-sm text-gray-500">Added 2 days ago</p>
+                    </div>
+                    <span
+                      class="px-2 py-1 text-xs bg-green-100 text-green-700 rounded-full"
+                      >Active</span
+                    >
+                  </div>
+                </div>
+                <router-link
+                  to="/admin/properties"
+                  class="inline-flex items-center mt-4 text-blue-600 hover:text-blue-800 font-medium text-sm"
+                >
+                  View all properties
+                  <ChevronRightIcon class="h-4 w-4 ml-1" />
+                </router-link>
+              </div>
+
+              <!-- Recent Appointments -->
+              <div
+                class="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
+              >
+                <h2 class="text-lg font-semibold mb-4">Recent Appointments</h2>
+                <div class="space-y-3">
+                  <div
+                    v-for="i in 3"
+                    :key="i"
+                    class="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div>
+                      <p class="font-medium">Meeting {{ i }}</p>
+                      <p class="text-sm text-gray-500">Today at 2:00 PM</p>
+                    </div>
+                    <span
+                      class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full"
+                      >Pending</span
+                    >
+                  </div>
+                </div>
+                <router-link
+                  to="/admin/appointments"
+                  class="inline-flex items-center mt-4 text-blue-600 hover:text-blue-800 font-medium text-sm"
+                >
+                  View all appointments
+                  <ChevronRightIcon class="h-4 w-4 ml-1" />
+                </router-link>
+              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -151,7 +209,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import {
@@ -166,6 +224,7 @@ import {
   CalendarDaysIcon,
   UserGroupIcon,
   ChartPieIcon,
+  ChevronRightIcon,
 } from "@heroicons/vue/24/outline";
 import { db } from "@/plugins/firebase";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -186,15 +245,15 @@ const menuItems = [
   { name: "Dashboard", route: "/admin", icon: HomeIcon },
   { name: "Properties", route: "/admin/properties", icon: ShoppingBagIcon },
   { name: "Appointments", route: "/admin/appointments", icon: ChartBarIcon },
-  { name: "Users", route: "/admin/users", icon: UsersIcon },
 ];
 
-// Dashboard cards
+// Counts
 const totalProperties = ref(0);
 const totalAppointments = ref(0);
 const totalUsers = ref(0);
 
-const dashboardCards = ref([
+// Reactive dashboard cards
+const dashboardCards = computed(() => [
   {
     title: "Total Properties",
     value: totalProperties.value,
@@ -233,10 +292,10 @@ const dashboardCards = ref([
 const toggleSidebar = () => (isSidebarOpen.value = !isSidebarOpen.value);
 const handleLogout = async () => {
   await store.logout();
-  router.push("/login");
+  router.push({ name: "Login" });
 };
 const isActiveRoute = (path: string) =>
-  path === "/admin" ? route.path === "/admin" : route.path.startsWith(path);
+  route.path === path || route.path.startsWith(path + "/");
 const getCurrentPageTitle = () =>
   menuItems.find((item) => isActiveRoute(item.route))?.name || "Dashboard";
 const updateDateTime = () => {
@@ -249,33 +308,29 @@ const updateDateTime = () => {
 };
 
 // Firestore snapshots
+let unsubProperties: any, unsubAppointments: any, unsubUsers: any;
+
 const setupRealtimeCounts = () => {
-  // Properties
-  onSnapshot(collection(db, "properties"), (snapshot) => {
-    totalProperties.value = snapshot.size;
-    const card = dashboardCards.value.find(
-      (c) => c.title === "Total Properties"
-    );
-    if (card) card.value = totalProperties.value;
-  });
-
-  // Appointments
-  onSnapshot(collection(db, "appointments"), (snapshot) => {
-    totalAppointments.value = snapshot.size;
-    const card = dashboardCards.value.find((c) => c.title === "Appointments");
-    if (card) card.value = totalAppointments.value;
-  });
-
-  // Users
-  onSnapshot(collection(db, "users"), (snapshot) => {
-    totalUsers.value = snapshot.size;
-    const card = dashboardCards.value.find((c) => c.title === "Active Users");
-    if (card) card.value = totalUsers.value;
-  });
+  unsubProperties = onSnapshot(
+    collection(db, "properties"),
+    (snap) => (totalProperties.value = snap.size)
+  );
+  unsubAppointments = onSnapshot(
+    collection(db, "appointments"),
+    (snap) => (totalAppointments.value = snap.size)
+  );
+  unsubUsers = onSnapshot(
+    collection(db, "users"),
+    (snap) => (totalUsers.value = snap.size)
+  );
 };
 
 // Lifecycle
 let interval: number;
+const handleResize = () => {
+  if (window.innerWidth < 768) isSidebarOpen.value = false;
+};
+
 onMounted(() => {
   startLoading();
   setTimeout(() => {
@@ -292,10 +347,8 @@ onMounted(() => {
 onUnmounted(() => {
   if (interval) clearInterval(interval);
   window.removeEventListener("resize", handleResize);
+  unsubProperties && unsubProperties();
+  unsubAppointments && unsubAppointments();
+  unsubUsers && unsubUsers();
 });
-
-// Responsive
-const handleResize = () => {
-  if (window.innerWidth < 768) isSidebarOpen.value = false;
-};
 </script>
