@@ -45,17 +45,10 @@ router.beforeEach((to) => {
   const store = useUserStore();
   const user = store.user;
 
-  // If route requires login and user is not logged in → redirect to login
-  if (to.meta.requiresAuth && !user) {
-    return { name: "Login" };
-  }
-
-  // If route requires admin and user is not admin → redirect to main page
-  if (to.meta.requiresAdmin && user?.role !== "admin") {
+  if (to.meta.requiresAuth && !user) return { name: "Login" };
+  if (to.meta.requiresAdmin && user?.role !== "admin")
     return { name: "MainPage" };
-  }
 
-  // Otherwise allow navigation
   return true;
 });
 
