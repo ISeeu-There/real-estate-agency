@@ -45,16 +45,6 @@
             Login
           </button>
         </form>
-
-        <p class="mt-4 text-gray-500 text-center">
-          Don't have an account?
-          <router-link
-            to="/register"
-            class="text-indigo-500 font-medium hover:underline"
-          >
-            Register
-          </router-link>
-        </p>
       </div>
     </transition>
   </div>

@@ -428,16 +428,16 @@
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2"
-                    >Image URL</label
+                    >Image</label
                   >
                   <input
-                    v-model="formData.image"
-                    type="url"
-                    required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="https://example.com/image.jpg"
+                    type="file"
+                    accept="image/*"
+                    @change="onFileChange"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg"
                   />
                 </div>
+
                 <div class="col-span-2">
                   <label class="block text-sm font-medium text-gray-700 mb-2"
                     >Location</label
@@ -582,6 +582,31 @@ const setupRealtimeProperties = () => {
 onMounted(() => {
   setupRealtimeProperties();
 });
+const file = ref<File | null>(null);
+
+const onFileChange = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  if (target.files?.length) {
+    file.value = target.files[0];
+  }
+};
+
+async function uploadToCloudinary(file: File) {
+  const url = `https://api.cloudinary.com/v1_1/dk0k4gxt8/image/upload`;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "real-estates-agency"); // created in Cloudinary settings
+
+  const res = await fetch(url, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!res.ok) throw new Error("Cloudinary upload failed");
+  const data = await res.json();
+  return data.secure_url; // ✅ direct image URL
+}
 
 // Computed properties
 const filteredProperties = computed(() => {
@@ -674,16 +699,26 @@ const closeModal = () => {
 // CRUD operations
 const saveProperty = async () => {
   try {
+    let imageUrl = formData.value.image;
+
+    if (file.value) {
+      // Upload image to Cloudinary
+      imageUrl = await uploadToCloudinary(file.value);
+    }
+
     if (modalMode.value === "create") {
       await addDoc(collection(db, "properties"), {
         ...formData.value,
+        image: imageUrl,
         createdAt: serverTimestamp(),
       });
     } else if (modalMode.value === "edit" && selectedProperty.value) {
       const docRef = doc(db, "properties", selectedProperty.value.id);
-      await updateDoc(docRef, formData.value);
+      await updateDoc(docRef, { ...formData.value, image: imageUrl });
     }
+
     closeModal();
+    file.value = null; // reset after upload
   } catch (err) {
     console.error("Error saving property:", err);
   }
