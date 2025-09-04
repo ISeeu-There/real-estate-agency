@@ -91,23 +91,91 @@
       <!-- Main Content -->
       <main class="flex-1 flex flex-col overflow-hidden">
         <!-- Top Bar -->
-        <header class="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
-          <div class="flex items-center justify-between">
-            <div>
-              <h1 class="text-2xl font-semibold">
-                {{ getCurrentPageTitle() }}
-              </h1>
-              <p class="text-gray-500 text-sm mt-1">
-                Welcome back, {{ store.user?.email?.split("@")[0] || "Admin" }}
-              </p>
-            </div>
+        <header
+          class="bg-white border-b border-gray-200 px-6 py-4 shadow-sm flex items-center justify-between"
+        >
+          <div class="flex items-center gap-4">
+            <h1 class="text-2xl font-semibold">{{ getCurrentPageTitle() }}</h1>
+            <p class="text-gray-500 text-sm mt-1">
+              Welcome back, {{ store.user?.email?.split("@")[0] || "Admin" }}
+            </p>
+          </div>
+          <div class="flex items-center gap-4">
             <p class="text-sm text-gray-500">{{ currentDateTime }}</p>
+
+            <!-- Notification Bell -->
+            <div class="relative">
+              <button
+                @click="showNotificationsDropdown = !showNotificationsDropdown"
+                class="relative p-2 rounded-full hover:bg-gray-100 transition"
+              >
+                <BellIcon class="h-6 w-6 text-gray-600" />
+                <span
+                  v-if="unreadMessages > 0"
+                  class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center font-semibold badge-pulse"
+                >
+                  {{ unreadMessages }}
+                </span>
+              </button>
+
+              <!-- Dropdown -->
+              <transition name="slide-fade">
+                <div
+                  v-if="showNotificationsDropdown"
+                  class="absolute right-0 mt-2 w-96 max-h-80 overflow-auto bg-white shadow-lg rounded-xl border border-gray-200 z-50"
+                >
+                  <p
+                    v-if="notifications.length === 0"
+                    class="text-gray-500 text-sm p-4"
+                  >
+                    No messages
+                  </p>
+                  <div v-else>
+                    <div
+                      v-for="note in notifications"
+                      :key="note.id"
+                      class="p-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
+                    >
+                      <p class="font-semibold text-gray-900">
+                        {{ note.name }}- {{ note.phone }}
+                      </p>
+                      <p>{{ note.email }}</p>
+                      <p class="text-gray-600 text-sm truncate">
+                        {{ note.message }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </transition>
+            </div>
           </div>
         </header>
 
+        <!-- Notifications -->
+
+        <div class="fixed top-4 right-4 space-y-2 z-50">
+          <!-- Modal -->
+          <div
+            v-if="selectedNotification"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          >
+            <div class="bg-white p-6 rounded-xl w-96 shadow-lg">
+              <h2 class="text-lg font-semibold">
+                {{ selectedNotification.name }}
+              </h2>
+              <p class="mt-2">{{ selectedNotification.message }}</p>
+              <button
+                @click="selectedNotification = null"
+                class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- Page Content -->
         <div class="flex-1 p-6 overflow-auto">
-          <!-- Show child routes -->
           <router-view />
 
           <!-- Dashboard overview -->
@@ -215,7 +283,6 @@ import { useUserStore } from "@/stores/user";
 import {
   HomeIcon,
   ShoppingBagIcon,
-  UsersIcon,
   ChartBarIcon,
   XMarkIcon,
   Bars3Icon,
@@ -225,6 +292,7 @@ import {
   UserGroupIcon,
   ChartPieIcon,
   ChevronRightIcon,
+  BellIcon,
 } from "@heroicons/vue/24/outline";
 import { db } from "@/plugins/firebase";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -252,7 +320,7 @@ const totalProperties = ref(0);
 const totalAppointments = ref(0);
 const totalUsers = ref(0);
 
-// Reactive dashboard cards
+// Dashboard cards
 const dashboardCards = computed(() => [
   {
     title: "Total Properties",
@@ -288,6 +356,20 @@ const dashboardCards = computed(() => [
   },
 ]);
 
+// Notification type
+interface Notification {
+  id: string;
+  name: string;
+  message: string;
+  phone: number;
+  email: string;
+}
+
+// Notifications
+const notifications = ref<Notification[]>([]);
+const unreadMessages = ref(0);
+let unsubContactMessages: any;
+
 // Functions
 const toggleSidebar = () => (isSidebarOpen.value = !isSidebarOpen.value);
 const handleLogout = async () => {
@@ -307,9 +389,8 @@ const updateDateTime = () => {
   });
 };
 
-// Firestore snapshots
+// Firestore listeners
 let unsubProperties: any, unsubAppointments: any, unsubUsers: any;
-
 const setupRealtimeCounts = () => {
   unsubProperties = onSnapshot(
     collection(db, "properties"),
@@ -325,30 +406,121 @@ const setupRealtimeCounts = () => {
   );
 };
 
-// Lifecycle
-let interval: number;
+// Realtime notifications
+// Add this ref for dropdown visibility
+const showNotificationsDropdown = ref(false);
+
+// Optional: close dropdown when clicked outside
+const closeDropdown = (event: MouseEvent) => {
+  const dropdown = document.querySelector("#notifications-dropdown");
+  if (dropdown && !dropdown.contains(event.target as Node)) {
+    showNotificationsDropdown.value = false;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", closeDropdown);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", closeDropdown);
+});
+
+const selectedNotification = ref<Notification | null>(null);
+const goToNotification = (note: Notification) => {
+  selectedNotification.value = note;
+};
+
+const setupRealtimeNotifications = () => {
+  const contactCollection = collection(db, "contactMessages");
+
+  unsubContactMessages = onSnapshot(contactCollection, (snapshot) => {
+    snapshot.docChanges().forEach((change) => {
+      if (change.type === "added") {
+        const data = change.doc.data();
+        const newNotification: Notification = {
+          id: change.doc.id,
+          name: data.name,
+          message: data.message,
+          phone: data.phone,
+          email: data.email,
+        };
+
+        // Add to notifications array (do NOT remove after 5s)
+        notifications.value.push(newNotification);
+
+        // Update unread count
+        unreadMessages.value++;
+      }
+    });
+  });
+};
+
+// Handle sidebar for small screens
 const handleResize = () => {
   if (window.innerWidth < 768) isSidebarOpen.value = false;
 };
 
+let interval: number;
+
+// Lifecycle
 onMounted(() => {
   startLoading();
-  setTimeout(() => {
-    updateDateTime();
-    interval = setInterval(updateDateTime, 60000);
-    setupRealtimeCounts();
-    stopLoading();
-  }, 800);
+  setupRealtimeCounts();
+  setupRealtimeNotifications();
+  updateDateTime();
+  interval = setInterval(updateDateTime, 60000);
 
   window.addEventListener("resize", handleResize);
   handleResize();
+
+  setTimeout(stopLoading, 800);
 });
 
 onUnmounted(() => {
   if (interval) clearInterval(interval);
   window.removeEventListener("resize", handleResize);
+
   unsubProperties && unsubProperties();
   unsubAppointments && unsubAppointments();
   unsubUsers && unsubUsers();
+  unsubContactMessages && unsubContactMessages();
 });
 </script>
+
+<style scoped>
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-enter-from {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+.slide-fade-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* Bell badge pulse animation */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+.badge-pulse {
+  animation: pulse 0.5s ease;
+}
+</style>
