@@ -592,11 +592,16 @@ const onFileChange = (e: Event) => {
 };
 
 async function uploadToCloudinary(file: File) {
-  const url = `https://api.cloudinary.com/v1_1/dk0k4gxt8/image/upload`;
+  const url = `https://api.cloudinary.com/v1_1/${
+    import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+  }/image/upload`;
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", "real-estates-agency"); // created in Cloudinary settings
+  formData.append(
+    "upload_preset",
+    import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+  );
 
   const res = await fetch(url, {
     method: "POST",
@@ -605,7 +610,7 @@ async function uploadToCloudinary(file: File) {
 
   if (!res.ok) throw new Error("Cloudinary upload failed");
   const data = await res.json();
-  return data.secure_url; // ✅ direct image URL
+  return data.secure_url;
 }
 
 // Computed properties
