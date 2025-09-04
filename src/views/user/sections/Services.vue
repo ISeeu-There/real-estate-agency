@@ -4,7 +4,30 @@
   >
     <!-- Header -->
     <div class="text-center space-y-6 max-w-3xl mx-auto">
-      <h1 class="text-4xl sm:text-5xl font-bold text-gray-900">Nos Services</h1>
+      <div class="text-center mb-16">
+        <div
+          class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+            ></path>
+          </svg>
+        </div>
+        <h2
+          class="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-800 to-purple-600 bg-clip-text text-transparent mb-4"
+        >
+          Our Services
+        </h2>
+      </div>
       <p class="text-lg text-gray-600">
         Chez <span class="font-semibold text-blue-600">DreamHomes</span>, nous
         vous accompagnons à chaque étape de votre projet immobilier, avec des

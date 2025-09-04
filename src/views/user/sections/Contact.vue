@@ -1,98 +1,110 @@
 <template>
   <div
-    class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 w-full pt-16 px-4 sm:px-6 lg:px-8"
+    class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 w-full pt-8 sm:pt-16 px-3 sm:px-4 md:px-6 lg:px-8"
   >
     <!-- Animated Background Elements -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div
-        class="absolute -top-40 -right-40 w-80 h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"
+        class="absolute -top-20 sm:-top-40 -right-20 sm:-right-40 w-40 sm:w-80 h-40 sm:h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"
       ></div>
       <div
-        class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"
+        class="absolute -bottom-20 sm:-bottom-40 -left-20 sm:-left-40 w-40 sm:w-80 h-40 sm:h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"
       ></div>
       <div
-        class="absolute top-40 left-40 w-80 h-80 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"
+        class="absolute top-20 sm:top-40 left-20 sm:left-40 w-40 sm:w-80 h-40 sm:h-80 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"
       ></div>
     </div>
 
     <div class="relative z-10">
       <!-- Header Section -->
-      <div class="text-center space-y-8 max-w-4xl mx-auto mb-20">
+      <div
+        class="text-center space-y-4 sm:space-y-8 max-w-4xl mx-auto mb-12 sm:mb-20"
+      >
         <div
-          class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-6"
+          class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-4 sm:mb-6"
         >
-          <EnvelopeIcon class="w-8 h-8 text-white" />
+          <EnvelopeIcon class="w-6 h-6 sm:w-8 sm:h-8 text-white" />
         </div>
 
         <h1
-          class="text-5xl sm:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent leading-tight"
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent leading-tight px-2"
         >
           Contactez-nous
         </h1>
 
         <p
-          class="text-xl sm:text-2xl text-gray-600 font-light max-w-3xl mx-auto leading-relaxed"
+          class="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 font-light max-w-3xl mx-auto leading-relaxed px-4"
         >
           Nous sommes là pour vous accompagner dans votre recherche du logement
           idéal. Notre équipe d'experts est à votre écoute.
         </p>
 
         <!-- Stats or Features -->
-        <div class="flex flex-wrap justify-center gap-8 mt-12">
+        <div
+          class="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-12 px-4"
+        >
           <div class="text-center">
-            <div class="text-3xl font-bold text-blue-600">24/7</div>
-            <div class="text-sm text-gray-500">Support disponible</div>
+            <div class="text-2xl sm:text-3xl font-bold text-blue-600">24/7</div>
+            <div class="text-xs sm:text-sm text-gray-500">
+              Support disponible
+            </div>
           </div>
           <div class="text-center">
-            <div class="text-3xl font-bold text-purple-600">1000+</div>
-            <div class="text-sm text-gray-500">Clients satisfaits</div>
+            <div class="text-2xl sm:text-3xl font-bold text-purple-600">
+              1000+
+            </div>
+            <div class="text-xs sm:text-sm text-gray-500">
+              Clients satisfaits
+            </div>
           </div>
           <div class="text-center">
-            <div class="text-3xl font-bold text-indigo-600">5★</div>
-            <div class="text-sm text-gray-500">Note moyenne</div>
+            <div class="text-2xl sm:text-3xl font-bold text-indigo-600">5★</div>
+            <div class="text-xs sm:text-sm text-gray-500">Note moyenne</div>
           </div>
         </div>
       </div>
 
       <!-- Main Content Grid -->
-      <div class="grid gap-12 lg:gap-16 lg:grid-cols-2 max-w-7xl mx-auto">
+      <div
+        class="grid gap-8 sm:gap-12 lg:gap-16 lg:grid-cols-2 max-w-7xl mx-auto"
+      >
         <!-- Contact Information Card -->
-        <div class="group">
+        <div class="group order-2 lg:order-1">
           <div
-            class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 lg:p-10 hover:shadow-3xl hover:scale-[1.02] transition-all duration-500 ease-out"
+            class="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl border border-white/20 p-4 sm:p-6 md:p-8 lg:p-10 hover:shadow-3xl hover:scale-[1.02] transition-all duration-500 ease-out"
           >
-            <div class="flex items-center gap-4 mb-8">
+            <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
               <div
-                class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center"
+                class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center"
               >
-                <MapPinIcon class="w-6 h-6 text-white" />
+                <MapPinIcon class="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
               <h2
-                class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                class="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
               >
                 Nos Coordonnées
               </h2>
             </div>
 
-            <div class="space-y-8">
+            <div class="space-y-4 sm:space-y-6 md:space-y-8">
               <!-- Email -->
               <div
-                class="group/item flex items-center gap-4 p-4 rounded-2xl hover:bg-blue-50/50 transition-all duration-300"
+                class="group/item flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-blue-50/50 transition-all duration-300"
               >
                 <div
-                  class="w-12 h-12 bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300"
+                  class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-100 to-blue-200 rounded-lg sm:rounded-xl flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300"
                 >
-                  <EnvelopeIcon class="w-6 h-6 text-blue-600" />
+                  <EnvelopeIcon class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
                 </div>
-                <div>
+                <div class="min-w-0 flex-1">
                   <p
-                    class="text-sm font-medium text-gray-500 uppercase tracking-wide"
+                    class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wide"
                   >
                     Email
                   </p>
                   <a
                     href="mailto:contact@dreamhomes.com"
-                    class="text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-300"
+                    class="text-sm sm:text-base md:text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-300 break-all"
                   >
                     contact@dreamhomes.com
                   </a>
@@ -101,22 +113,22 @@
 
               <!-- Phone -->
               <div
-                class="group/item flex items-center gap-4 p-4 rounded-2xl hover:bg-purple-50/50 transition-all duration-300"
+                class="group/item flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-purple-50/50 transition-all duration-300"
               >
                 <div
-                  class="w-12 h-12 bg-gradient-to-r from-purple-100 to-purple-200 rounded-xl flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300"
+                  class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-100 to-purple-200 rounded-lg sm:rounded-xl flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300"
                 >
-                  <PhoneIcon class="w-6 h-6 text-purple-600" />
+                  <PhoneIcon class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
                 </div>
-                <div>
+                <div class="min-w-0 flex-1">
                   <p
-                    class="text-sm font-medium text-gray-500 uppercase tracking-wide"
+                    class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wide"
                   >
                     Téléphone
                   </p>
                   <a
                     href="tel:+213555123456"
-                    class="text-lg font-semibold text-gray-800 hover:text-purple-600 transition-colors duration-300"
+                    class="text-sm sm:text-base md:text-lg font-semibold text-gray-800 hover:text-purple-600 transition-colors duration-300"
                   >
                     +213 555 123 456
                   </a>
@@ -125,20 +137,22 @@
 
               <!-- Address -->
               <div
-                class="group/item flex items-center gap-4 p-4 rounded-2xl hover:bg-indigo-50/50 transition-all duration-300"
+                class="group/item flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-indigo-50/50 transition-all duration-300"
               >
                 <div
-                  class="w-12 h-12 bg-gradient-to-r from-indigo-100 to-indigo-200 rounded-xl flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300"
+                  class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-indigo-100 to-indigo-200 rounded-lg sm:rounded-xl flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300"
                 >
-                  <MapPinIcon class="w-6 h-6 text-indigo-600" />
+                  <MapPinIcon class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />
                 </div>
-                <div>
+                <div class="min-w-0 flex-1">
                   <p
-                    class="text-sm font-medium text-gray-500 uppercase tracking-wide"
+                    class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wide"
                   >
                     Adresse
                   </p>
-                  <p class="text-lg font-semibold text-gray-800">
+                  <p
+                    class="text-sm sm:text-base md:text-lg font-semibold text-gray-800"
+                  >
                     123 Rue des Villas, Alger, Algérie
                   </p>
                 </div>
@@ -146,15 +160,15 @@
             </div>
 
             <!-- Map Section -->
-            <div class="mt-10">
+            <div class="mt-6 sm:mt-8 md:mt-10">
               <div
-                class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white/30 hover:border-white/50 transition-all duration-500"
+                class="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white/30 hover:border-white/50 transition-all duration-500"
               >
                 <div
                   class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 z-10"
                 ></div>
                 <iframe
-                  class="w-full h-80 filter contrast-110 saturate-110"
+                  class="w-full h-48 sm:h-64 md:h-80 filter contrast-110 saturate-110"
                   frameborder="0"
                   style="border: 0"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52014.82134850001!2d3.0421554!3d36.7372648!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fad6aac606a3f%3A0x4ba2e4fa6d4d3c9e!2sAlger%2C%20Algeria!5e0!3m2!1sen!2sus!4v1638000000000!5m2!1sen!2sus"
@@ -167,24 +181,24 @@
         </div>
 
         <!-- Contact Form Card -->
-        <div class="group">
+        <div class="group order-1 lg:order-2">
           <div
-            class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 lg:p-10 hover:shadow-3xl hover:scale-[1.02] transition-all duration-500 ease-out"
+            class="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl border border-white/20 p-4 sm:p-6 md:p-8 lg:p-10 hover:shadow-3xl hover:scale-[1.02] transition-all duration-500 ease-out"
           >
-            <div class="flex items-center gap-4 mb-8">
+            <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
               <div
-                class="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center"
+                class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center"
               >
-                <EnvelopeIcon class="w-6 h-6 text-white" />
+                <EnvelopeIcon class="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
               <h2
-                class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
+                class="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
               >
                 Envoyez-nous un message
               </h2>
             </div>
 
-            <form @submit.prevent="submitForm" class="space-y-6">
+            <form @submit.prevent="submitForm" class="space-y-4 sm:space-y-6">
               <!-- Name Input -->
               <div class="group/input">
                 <label class="block text-sm font-semibold text-gray-700 mb-2"
@@ -196,10 +210,10 @@
                     type="text"
                     placeholder="Votre nom complet"
                     required
-                    class="w-full px-5 py-4 bg-gray-50/50 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 placeholder-gray-400 text-gray-800 font-medium group-hover/input:border-gray-300"
+                    class="w-full px-4 py-3 sm:px-5 sm:py-4 bg-gray-50/50 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 placeholder-gray-400 text-gray-800 font-medium group-hover/input:border-gray-300 text-sm sm:text-base"
                   />
                   <div
-                    class="absolute inset-y-0 right-4 flex items-center pointer-events-none"
+                    class="absolute inset-y-0 right-3 sm:right-4 flex items-center pointer-events-none"
                   >
                     <div
                       class="w-2 h-2 bg-blue-400 rounded-full opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-300"
@@ -219,10 +233,10 @@
                     type="email"
                     placeholder="votre@email.com"
                     required
-                    class="w-full px-5 py-4 bg-gray-50/50 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:bg-white focus:ring-4 focus:ring-purple-500/20 transition-all duration-300 placeholder-gray-400 text-gray-800 font-medium group-hover/input:border-gray-300"
+                    class="w-full px-4 py-3 sm:px-5 sm:py-4 bg-gray-50/50 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-purple-500 focus:bg-white focus:ring-4 focus:ring-purple-500/20 transition-all duration-300 placeholder-gray-400 text-gray-800 font-medium group-hover/input:border-gray-300 text-sm sm:text-base"
                   />
                   <div
-                    class="absolute inset-y-0 right-4 flex items-center pointer-events-none"
+                    class="absolute inset-y-0 right-3 sm:right-4 flex items-center pointer-events-none"
                   >
                     <div
                       class="w-2 h-2 bg-purple-400 rounded-full opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-300"
@@ -242,10 +256,10 @@
                     type="tel"
                     placeholder="+213 XXX XXX XXX"
                     required
-                    class="w-full px-5 py-4 bg-gray-50/50 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/20 transition-all duration-300 placeholder-gray-400 text-gray-800 font-medium group-hover/input:border-gray-300"
+                    class="w-full px-4 py-3 sm:px-5 sm:py-4 bg-gray-50/50 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/20 transition-all duration-300 placeholder-gray-400 text-gray-800 font-medium group-hover/input:border-gray-300 text-sm sm:text-base"
                   />
                   <div
-                    class="absolute inset-y-0 right-4 flex items-center pointer-events-none"
+                    class="absolute inset-y-0 right-3 sm:right-4 flex items-center pointer-events-none"
                   >
                     <div
                       class="w-2 h-2 bg-indigo-400 rounded-full opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-300"
@@ -264,10 +278,12 @@
                     v-model="form.message"
                     placeholder="Décrivez votre projet, vos besoins, ou posez-nous vos questions..."
                     required
-                    rows="5"
-                    class="w-full px-5 py-4 bg-gray-50/50 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 placeholder-gray-400 text-gray-800 font-medium resize-none group-hover/input:border-gray-300"
+                    rows="4"
+                    class="w-full px-4 py-3 sm:px-5 sm:py-4 bg-gray-50/50 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 placeholder-gray-400 text-gray-800 font-medium resize-none group-hover/input:border-gray-300 text-sm sm:text-base"
                   ></textarea>
-                  <div class="absolute top-4 right-4 pointer-events-none">
+                  <div
+                    class="absolute top-3 sm:top-4 right-3 sm:right-4 pointer-events-none"
+                  >
                     <div
                       class="w-2 h-2 bg-blue-400 rounded-full opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-300"
                     ></div>
@@ -279,17 +295,23 @@
               <button
                 type="submit"
                 :disabled="isSubmitting"
-                class="group/btn w-full relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                class="group/btn w-full relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-lg sm:rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
                 <div
                   class="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"
                 ></div>
-                <span class="relative flex items-center justify-center gap-3">
-                  <span v-if="!isSubmitting">Envoyer le message</span>
-                  <span v-else>Envoi en cours...</span>
+                <span
+                  class="relative flex items-center justify-center gap-2 sm:gap-3"
+                >
+                  <span v-if="!isSubmitting" class="text-sm sm:text-base"
+                    >Envoyer le message</span
+                  >
+                  <span v-else class="text-sm sm:text-base"
+                    >Envoi en cours...</span
+                  >
                   <div
                     v-if="isSubmitting"
-                    class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"
+                    class="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"
                   ></div>
                 </span>
               </button>
@@ -298,14 +320,14 @@
             <!-- Success Message -->
             <div
               v-if="submitted"
-              class="mt-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl transform transition-all duration-500 ease-out"
+              class="mt-6 sm:mt-8 p-4 sm:p-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl sm:rounded-2xl transform transition-all duration-500 ease-out"
             >
-              <div class="flex items-center gap-4">
+              <div class="flex items-center gap-3 sm:gap-4">
                 <div
-                  class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0"
+                  class="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0"
                 >
                   <svg
-                    class="w-6 h-6 text-white"
+                    class="w-5 h-5 sm:w-6 sm:h-6 text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -317,10 +339,10 @@
                   </svg>
                 </div>
                 <div>
-                  <h3 class="font-bold text-green-800 text-lg">
+                  <h3 class="font-bold text-green-800 text-base sm:text-lg">
                     Message envoyé avec succès !
                   </h3>
-                  <p class="text-green-700">
+                  <p class="text-green-700 text-sm sm:text-base">
                     Nous vous répondrons dans les plus brefs délais.
                   </p>
                 </div>
@@ -331,21 +353,25 @@
       </div>
 
       <!-- Additional Contact Methods -->
-      <div class="mt-20 mb-16">
+      <div class="mt-12 sm:mt-16 md:mt-20 mb-8 sm:mb-12 md:mb-16">
         <div class="max-w-4xl mx-auto text-center">
-          <h3 class="text-2xl font-bold text-gray-800 mb-8">
+          <h3
+            class="text-xl sm:text-2xl font-bold text-gray-800 mb-6 sm:mb-8 px-4"
+          >
             Autres moyens de nous contacter
           </h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"
+          >
             <!-- WhatsApp -->
             <div
-              class="group bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-white/30 hover:bg-white/80 hover:shadow-xl transition-all duration-300"
+              class="group bg-white/60 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-white/30 hover:bg-white/80 hover:shadow-xl transition-all duration-300"
             >
               <div
-                class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
+                class="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300"
               >
                 <svg
-                  class="w-6 h-6 text-white"
+                  class="w-5 h-5 sm:w-6 sm:h-6 text-white"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -354,13 +380,15 @@
                   />
                 </svg>
               </div>
-              <h4 class="font-semibold text-gray-800 mb-2">WhatsApp</h4>
-              <p class="text-gray-600 text-sm mb-3">
+              <h4 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">
+                WhatsApp
+              </h4>
+              <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3">
                 Contactez-nous directement
               </p>
               <a
                 href="https://wa.me/213555123456"
-                class="text-green-600 font-medium hover:text-green-700 transition-colors"
+                class="text-green-600 font-medium hover:text-green-700 transition-colors text-xs sm:text-sm"
               >
                 +213 555 123 456
               </a>
@@ -368,13 +396,13 @@
 
             <!-- Facebook -->
             <div
-              class="group bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-white/30 hover:bg-white/80 hover:shadow-xl transition-all duration-300"
+              class="group bg-white/60 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-white/30 hover:bg-white/80 hover:shadow-xl transition-all duration-300"
             >
               <div
-                class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
+                class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300"
               >
                 <svg
-                  class="w-6 h-6 text-white"
+                  class="w-5 h-5 sm:w-6 sm:h-6 text-white"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -383,11 +411,15 @@
                   />
                 </svg>
               </div>
-              <h4 class="font-semibold text-gray-800 mb-2">Facebook</h4>
-              <p class="text-gray-600 text-sm mb-3">Suivez-nous sur Facebook</p>
+              <h4 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">
+                Facebook
+              </h4>
+              <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3">
+                Suivez-nous sur Facebook
+              </p>
               <a
                 href="https://facebook.com/dreamhomes"
-                class="text-blue-600 font-medium hover:text-blue-700 transition-colors"
+                class="text-blue-600 font-medium hover:text-blue-700 transition-colors text-xs sm:text-sm"
               >
                 @DreamHomes
               </a>
@@ -395,13 +427,13 @@
 
             <!-- Instagram -->
             <div
-              class="group bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-white/30 hover:bg-white/80 hover:shadow-xl transition-all duration-300"
+              class="group bg-white/60 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-white/30 hover:bg-white/80 hover:shadow-xl transition-all duration-300 sm:col-span-2 md:col-span-1"
             >
               <div
-                class="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
+                class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300"
               >
                 <svg
-                  class="w-6 h-6 text-white"
+                  class="w-5 h-5 sm:w-6 sm:h-6 text-white"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -410,11 +442,15 @@
                   />
                 </svg>
               </div>
-              <h4 class="font-semibold text-gray-800 mb-2">Instagram</h4>
-              <p class="text-gray-600 text-sm mb-3">Photos & actualités</p>
+              <h4 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">
+                Instagram
+              </h4>
+              <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3">
+                Photos & actualités
+              </p>
               <a
                 href="https://instagram.com/dreamhomes"
-                class="text-purple-600 font-medium hover:text-purple-700 transition-colors"
+                class="text-purple-600 font-medium hover:text-purple-700 transition-colors text-xs sm:text-sm"
               >
                 @dreamhomes_dz
               </a>
@@ -523,5 +559,87 @@ textarea::-webkit-scrollbar-thumb {
 
 textarea::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  /* Ensure better touch targets on mobile */
+  input,
+  textarea,
+  button {
+    min-height: 44px;
+  }
+
+  /* Improve text readability on small screens */
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Better tap highlighting */
+  a,
+  button {
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.3);
+    tap-highlight-color: rgba(59, 130, 246, 0.3);
+  }
+
+  /* Prevent zoom on input focus */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Extra small screens (phones in portrait) */
+@media (max-width: 375px) {
+  .text-3xl {
+    font-size: 1.75rem;
+  }
+
+  .px-3 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .pt-8 {
+    padding-top: 1rem;
+  }
+
+  .mb-12 {
+    margin-bottom: 2rem;
+  }
+
+  .space-y-4 > * + * {
+    margin-top: 0.75rem;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Dark mode support for mobile */
+@media (prefers-color-scheme: dark) {
+  /* Add dark mode styles if needed */
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .animate-blob,
+  .transition-all,
+  .transition-transform,
+  .transition-opacity,
+  .transition-colors {
+    animation: none;
+    transition: none;
+  }
 }
 </style>
