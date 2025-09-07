@@ -1,5 +1,37 @@
-# Vue 3 + TypeScript + Vite
+# 🏡 Real Estate Agency
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A real estate management web application built with **Vue 3, Vite, Pinia, Vue Router**, and **Firebase**.  
+Deployed on [Vercel]([https://vercel.com](https://real-estate-agency-tawny.vercel.app/)).
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+---
+
+## 🚀 Features
+
+- 🔐 **Authentication** (Login)
+- 👥 **Role-based access** (User / Admin)
+- 🏠 **Admin Dashboard**  
+  - Manage Properties  
+  - Manage Appointments
+- 📱 **Responsive UI**
+- ☁️ **Deployed on Vercel**
+
+---
+
+## 📦 Tech Stack
+
+- [Vue 3](https://vuejs.org/) + [Vite](https://vitejs.dev/)
+- [Pinia](https://pinia.vuejs.org/) (state management)
+- [Vue Router](https://router.vuejs.org/) (routing)
+- [Firebase](https://firebase.google.com/) (auth & backend)
+- - [Cloudinary](https://cloudinary.com/) (image hosting)
+- [Tailwind CSS](https://tailwindcss.com/) (styling)
+
+---
+
+## ⚙️ Project Setup
+
+Clone the repo:
+
+```bash
+git clone https://github.com/your-username/real-estate-agency.git
+cd real-estate-agency
