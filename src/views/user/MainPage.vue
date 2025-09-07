@@ -42,6 +42,10 @@
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-8 font-medium">
+        <butto
+          class="relative px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+          ><a href="/login">Login</a></butto
+        >
         <button
           @click="scrollToSection('home')"
           :class="[
